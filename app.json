@@ -2,12 +2,13 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/history/history"
+    "pages/history/history",
+    "pages/calc/calc"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "智能计算器",
+    "navigationBarTitleText": "老朱万事通",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
