@@ -3,48 +3,124 @@
 const app = getApp()
 
 Page({
-  data: {
-    list: [
-      {
-        id: 'view',
-        name: '紧急电话',
-        open: false,
-        subName: ['火警', '盗警', '急救', '报时', '电力抢修', '管道液化气抢修', '市话障碍', '交通事故', '天气预报', '号码查询'],
-        phone: ['119', '110', '120', '117', '95598', '87221599', '112', '122', '121', '114']
-      }, {
-        id: 'form',
-        name: '银行电话',
-        open: false,
-        subName: ['工商银行', '建设银行', '农业银行', '中国银行', '交通银行', '浦发银行', '民生银行', '兴业银行', '中信银行', '深圳发展银行', '华夏银行', '招商银行', '广发银行', '广东农信', '光大银行'],
-        phone: ['95588', '95533', '95599', '95566', '95559', '95528', '95568', '95561', '95558', '95501', '95577', '95555', '95508', '96138', '95595']
-      }, {
-        id: 'feedback',
-        name: '快递电话',
-        open: false,
-        subName: ['申通快递', 'EMS', '顺丰速运', '	圆通速递', '中通速递', '韵达快运', '天天快递', '汇通快运', '速尔快递', '德邦物流', '中铁快运', '鑫飞鸿快递', 'UPS', 'FedEx(联邦快递)'],
-        phone: ['4008895543', '4008100999', '021-69777888', '021-39777777', '021-39207888', '021-67662333', '021-62963636', '4008822168', '4008305555', '95572', '021-69781999', '4008208388', '4008861888']
-      }, {
-        id: 'nav',
-        name: '通讯客服',
-        open: false,
-        subName: ['中国移动', '中国联通', '中国电信', '中国网通', '中国铁通', '中国邮政'],
-        phone: ['10086', '10010', '10000', '10060', '10050', '11185']
-      }, {
-        id: 'media',
-        name: '投诉举报',
-        open: false,
-        subName: ['消费者投诉热线', '价格投诉热线', '质量投诉', '环保投诉', '税务投诉', '公共卫生监督', '电信投诉', '市长热线', '法律援助', '妇女维权', '民工维权'],
-        phone: ['12315', '12358', '12365', '12369', '12366', '12320', '12300', '12366', '12351', '12338', '12333']
-      }, {
-        id: 'map',
-        name: '铁路航空',
-        subName: ['铁路', '国航', '海航', '南航', '东航', '深航', '厦航', '山航'],
-        phone: ['12306', '4008100999', '950718', '4006695539', '95530', '4008895080', '95557', '4006096777']
-      }
-    ]
+  data: { list: [] },
+  onLoad: function (options) {
+    console.log('onLoad');
+    // 页面初始化 options为页面跳转所带来的参数
+    var groupItem = {};
+    var index = 0;
+    //紧急电话
+    groupItem.id = (index++).toString();
+    groupItem.name = "紧急电话";
+    groupItem.open = false;
+    groupItem.subName = [];
+    groupItem.phone = [];
+    groupItem.subName.push("交通事故");
+    groupItem.phone.push("122");
+    groupItem.subName.push("号码查询");
+    groupItem.phone.push("114");
+    this.data.list.push(groupItem);
+
+    //银行电话
+    groupItem = {};
+    groupItem.id = (index++).toString();
+    groupItem.name = "银行电话";
+    groupItem.open = false;
+    groupItem.subName = [];
+    groupItem.phone = [];
+    groupItem.subName.push("工商银行");
+    groupItem.phone.push("95588");
+    groupItem.subName.push("建设银行");
+    groupItem.phone.push("95533");
+    groupItem.subName.push("农业银行");
+    groupItem.phone.push("95599");
+    groupItem.subName.push("中国银行");
+    groupItem.phone.push("95559");
+    groupItem.subName.push("交通银行");
+    groupItem.phone.push("95528");
+    groupItem.subName.push("浦发银行");
+    groupItem.phone.push("95568");
+    this.data.list.push(groupItem);
+    //快递电话
+    groupItem = {};
+    groupItem.id = (index++).toString();
+    groupItem.name = "快递电话";
+    groupItem.open = false;
+    groupItem.subName = [];
+    groupItem.phone = [];
+    groupItem.subName.push("EMS");
+    groupItem.phone.push("11183");
+    groupItem.subName.push("顺丰速运");
+    groupItem.phone.push("95338");
+    groupItem.subName.push("申通快递");
+    groupItem.phone.push("95543");
+    groupItem.subName.push("中通速递");
+    groupItem.phone.push("95311");
+    groupItem.subName.push("韵达快运");
+    groupItem.phone.push("95546");
+    this.data.list.push(groupItem);
+    //通讯客服
+    groupItem = {};
+    groupItem.id = (index++).toString();
+    groupItem.name = "通讯客服";
+    groupItem.open = false;
+    groupItem.subName = [];
+    groupItem.phone = [];
+    groupItem.subName.push("中国移动");
+    groupItem.phone.push("10086");
+    groupItem.subName.push("中国联通");
+    groupItem.phone.push("10010");
+    groupItem.subName.push("中国电信");
+    groupItem.phone.push("10000");
+    groupItem.subName.push("中国邮政");
+    groupItem.phone.push("11185");
+    groupItem.subName.push("中国广电");
+    groupItem.phone.push("96888");
+    this.data.list.push(groupItem);
+    //投诉举报
+    groupItem = {};
+    groupItem.id = (index++).toString();
+    groupItem.name = "投诉举报";
+    groupItem.open = false;
+    groupItem.subName = [];
+    groupItem.phone = [];
+    groupItem.subName.push("消费者投诉");
+    groupItem.phone.push("12315");
+    groupItem.subName.push("价格投诉");
+    groupItem.phone.push("12358");
+    groupItem.subName.push("环保投诉");
+    groupItem.phone.push("12369");
+    groupItem.subName.push("质量投诉");
+    groupItem.phone.push("12365");
+    groupItem.subName.push("税务投诉");
+    groupItem.phone.push("12366");
+    groupItem.subName.push("电信投诉");
+    groupItem.phone.push("12366");
+    groupItem.subName.push("市长热线");
+    groupItem.phone.push("12345");
+    this.data.list.push(groupItem);
+    //铁路航空
+    groupItem = {};
+    groupItem.id = (index++).toString();
+    groupItem.name = "铁路航空";
+    groupItem.open = false;
+    groupItem.subName = [];
+    groupItem.phone = [];
+    groupItem.subName.push("铁路");
+    groupItem.phone.push("12306");
+    groupItem.subName.push("购买机票");
+    groupItem.phone.push("66666666");
+    this.data.list.push(groupItem);
+
+    this.setData({
+      list: this.data.list
+    });
   },
   widgetsToggle: function (e) {
-    var id = e.currentTarget.id, list = this.data.list;
+    console.log('widgetsToggle');
+    var id = e.currentTarget.id;
+    var list = this.data.list;
+    console.log(list);
     for (var i = 0, len = list.length; i < len; ++i) {
       if (list[i].id == id) {
         list[i].open = !list[i].open;
@@ -57,8 +133,15 @@ Page({
     });
   },
   callPhone: function (e) {
+    console.log(e);
+    console.log(e.target.dataset.phone);
     wx.makePhoneCall({
       phoneNumber: e.target.dataset.phone
+    })
+  },
+  calc: function () {
+    wx.navigateTo({
+      url: '../calc/calc'
     })
   }
 });

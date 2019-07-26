@@ -106,3 +106,6 @@
   right: 0;
   background-color: #d8d8d8;
 }
+.calc {
+  background-color: #f78d1d;
+}
