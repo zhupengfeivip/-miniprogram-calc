@@ -12,6 +12,12 @@
           <image class="widgets__info-img" src="../images/Calc_Flat_Round_48px.png" mode="aspectFill" />
         </view>
       </view>
+      <view class="widgets__item calendar" bindtap="calendar">
+        <view id="calc" class="widgets__info">
+          <text class="widgets__info-name">万年历</text>
+          <image class="widgets__info-img" src="../images/calendar_41.011494252874px_1234287.png" mode="aspectFill" />
+        </view>
+      </view>
       <block wx:for-items="{{list}}">
         <view class="widgets__item">
           <!--类别 -->

@@ -109,3 +109,6 @@
 .calc {
   background-color: #f78d1d;
 }
+.calendar {
+  background-color: #e9a4dd;
+}

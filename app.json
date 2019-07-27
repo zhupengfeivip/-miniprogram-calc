@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/history/history",
-    "pages/calc/calc"
+    "pages/calc/calc",
+    "pages/calendar/calendar"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -143,5 +143,10 @@ Page({
     wx.navigateTo({
       url: '../calc/calc'
     })
+  },
+  calendar: function () {
+    wx.navigateTo({
+      url: '../calendar/calendar'
+    })
   }
 });
