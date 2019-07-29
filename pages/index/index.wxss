@@ -52,6 +52,11 @@
 
 .widgets__info-name {
   flex: 1;
+  font-weight:bold;
+}
+
+.view-item-hover{
+  background-color: #d8d8d8;
 }
 
 .widgets__info-img {
