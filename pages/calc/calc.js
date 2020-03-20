@@ -145,5 +145,12 @@ Page({
     wx.navigateTo({
       url: '../history/history'
     })
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '老朱万事通-计算器-可查看历史',
+      desc: '最具人气的日常生活工具小程序!',
+      path: '/pages/calc/calc'
+    }
   }
 })

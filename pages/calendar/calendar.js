@@ -1,98 +1,144 @@
-var myDate = new Date();
-var month = myDate.getMonth();
-var year = myDate.getFullYear();
-
-/**
- * 月份天数表
- * @type {*[]}
- */
-var dayOfMonth = [
-  [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-  [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-];
-
-/**
- * 判断当前年是否闰年
- * @param year 年
- * @returns {number}
- */
-var isLeapYear = (year) => {
-  if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0))
-    return 1
-  else
-    return 0
-};
-
-/**
- * 获取当月有多少天
- * @param year 年
- * @param month 月(未减1)
- * @returns {*}
- */
-var get_day = (year, month) => {
-  return dayOfMonth[isLeapYear(year)][month];
-};
-
+var util = require('../../utils/util.js')
+var d = require('date.js')
+var CN_Date = require('getCNDate.js');
+var app = getApp()
+var t = new Date();
 Page({
   data: {
-    week: ["日", "一", "二", "三", "四", "五", "六"],
-    monthStart: (new Date(year, month, 1)).getDay(),
-    day: get_day(year, month),
-    date: year + '年' + (month + 1) + '月'
+    monthNum: t.getMonth() + 1,
+    yearNum: t.getFullYear(),
+    MonthDayArray: [],
+    toDate: t.getDate(),
+    toMonth: t.getMonth() + 1,
+    toYear: t.getFullYear(),
+    fromToday: '今天',
+    nongliDetail: CN_Date(t.getFullYear(), t.getMonth() + 1, t.getDate()),
   },
 
-  switchMonth(e) {
-    switch (+e.target.dataset.type) {
-      case 0:    //左切
-        if (month == 0) {
-          year--;
-          month = 11;
-        } else {
-          month--;
+  onShow: function () {
+    console.log('onShow');
+    this.calcMonthDayArray();
+  },
+
+  dateClick: function (e) {
+    var eId = e.currentTarget.id;
+    var MonArray = this.data.MonthDayArray;
+    var data = this.data;
+    if (eId == "") return;
+    //点击效果 ，且只能选中一个日期
+    //FIX 这个遍历算法可以改进
+    for (var i = 0; i < MonArray.length; i++) {
+      for (var j = 0; j < MonArray[i].length; j++) {
+        if (typeof (MonArray[i][j]) == 'string') {
+          continue;
         }
-        break;
-      case 1:    //右切
-        if (month == 11) {
-          year++;
-          month = 0;
-        } else {
-          month++;
+        if (MonArray[i][j].num == eId) {
+          MonArray[i][j].isShowDayInfo = !MonArray[i][j].isShowDayInfo;
         }
-        break;
+      }
     }
-    this.switchDate(year, month + 1);
-  },
 
-  //切换年月
-  switchDate(y, m) {  //调用此方法切换指定时间
+    for (var i = 0; i < MonArray.length; i++) {
+      for (var j = 0; j < MonArray[i].length; j++) {
+        if (typeof (MonArray[i][j]) == 'string' || MonArray[i][j].num == eId) {
+          continue;
+        }
+        MonArray[i][j].isShowDayInfo = false;
+      }
+    }
 
-    //重置年月
-    year = y;
-    month = m - 1;
     this.setData({
-      day: get_day(year, month),
-      date: year + "年" + (month + 1) + "月",
-      monthStart: (new Date(year, month, 1)).getDay()
-    });
-
+      MonthDayArray: MonArray,
+      toYear: data.yearNum,
+      toMonth: data.monthNum,
+      toDate: eId,
+      fromToday: d.getFromTodayDays(eId, data.monthNum - 1, data.yearNum),
+      nongliDetail: CN_Date(data.yearNum, data.monthNum, eId),
+    })
   },
 
-  clickItem(e) {
-    var day = e.target.dataset.day;
-
-    console.log(year + '年' + (month + 1) + '月' + day + "日");
-
+  monthTouch: function (e) {
+    var beginX = e.target.offsetLeft;
+    var endX = e.changedTouches[0].clientX;
+    if (beginX - endX > 125) {
+      this.nextMonth_Fn();
+    }
+    else if (beginX - endX < -125) {
+      this.lastMonth_Fn();
+    }
   },
-  onLoad() {
 
-
-
+  /**
+   * 下一个月
+   */
+  nextMonth_Fn: function () {
+    console.log("nextMonth_Fn");
+    var n = this.data.monthNum;
+    var y = this.data.yearNum;
+    if (n == 12) {
+      this.setData({
+        monthNum: 1,
+        yearNum: y + 1,
+      });
+    }
+    else {
+      this.setData({
+        monthNum: n + 1,
+      });
+    }
+    this.calcMonthDayArray();
   },
 
-  onReady() {
+  /**
+   * 上一个月
+   */
+  lastMonth_Fn: function () {
+    console.log("lastMonth_Fn");
+    var n = this.data.monthNum;
+    var y = this.data.yearNum;
+    if (n == 1) {
+      this.setData({
+        monthNum: 12,
+        yearNum: y - 1,
+      });
+    }
+    else {
+      this.setData({
+        monthNum: n - 1,
+      });
+    }
+    this.calcMonthDayArray();
+  },
 
-    //切换年份
-    // this.switchDate(2017,4);
+  calcMonthDayArray: function () {
+    var data = this.data;
+    var dateArray = d.paintCalendarArray(data.monthNum, data.yearNum);
 
+    //如果不是当年当月，自动选中1号
+    var notToday = (data.monthNum != t.getMonth() + 1 || data.yearNum != t.getFullYear());
+    if (notToday) {
+      for (var i = 0; i < dateArray[0].length; i++) {
+        if (dateArray[0][i].num == 1) {
+          dateArray[0][i].isShowDayInfo = true;
+        }
+      }
+    }
+
+    this.setData({
+      MonthDayArray: dateArray,
+      toYear: notToday ? this.data.yearNum : t.getFullYear(),
+      toMonth: notToday ? this.data.monthNum : t.getMonth() + 1,
+      toDate: notToday ? 1 : t.getDate(),
+      fromToday: notToday ? d.getFromTodayDays(1, data.monthNum - 1, data.yearNum) : '今天',
+      nongliDetail: notToday ? CN_Date(data.yearNum, data.monthNum, 1) : CN_Date(t.getFullYear(), t.getMonth() + 1, t.getDate()),
+    })
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '老朱万事通-万年历',
+      desc: '最具人气的日常生活工具小程序!',
+      path: '/pages/calendar/calendar'
+    }
   }
-});
+
+})

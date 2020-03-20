@@ -117,3 +117,6 @@
 .calendar {
   background-color: #e9a4dd;
 }
+.qrcode {
+  background-color: #a2e096;
+}

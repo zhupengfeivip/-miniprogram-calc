@@ -148,5 +148,17 @@ Page({
     wx.navigateTo({
       url: '../calendar/calendar'
     })
+  },
+  qrcode: function () {
+    wx.navigateTo({
+      url: '../createqrcode/qrcode'
+    })
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '老朱万事通',
+      desc: '最具人气的日常生活工具小程序!',
+      path: '/pages/index'
+    }
   }
 });
